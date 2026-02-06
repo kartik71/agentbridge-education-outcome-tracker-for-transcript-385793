@@ -1,0 +1,321 @@
+{
+  "id": "tpl-2559153762",
+  "name": "Education Outcome Tracker for Transcript",
+  "description": "Education Outcome Tracker for Transcript flags grades and proctors LMS activity; applies decision gates and observability; orchestrates via Analytics Lake to reduce absenteeism.",
+  "industry": "Education",
+  "pattern": "RAG",
+  "complexity": "Expert",
+  "rating": 4.6,
+  "downloads": 23922,
+  "favorites": 2162,
+  "executionTime": "10 min",
+  "tags": [
+    "advising",
+    "lms",
+    "rag",
+    "education"
+  ],
+  "steps": [
+    {
+      "id": "intake",
+      "name": "Assessment Intake",
+      "description": "Collect, validate and normalize content metadata from SIS; attach a runId and timestamp for traceability."
+    },
+    {
+      "id": "retrieve-0",
+      "name": "Retrieve",
+      "description": "Execute retrieve phase for the RAG pattern: persist interim state, enforce guardrails, and emit structured JSON results."
+    },
+    {
+      "id": "ground-1",
+      "name": "Ground",
+      "description": "Execute ground phase for the RAG pattern: persist interim state, enforce guardrails, and emit structured JSON results."
+    },
+    {
+      "id": "readiness-check-0",
+      "name": "Readiness Check",
+      "description": "Readiness Check across joined datasets; branch on thresholds using decision gates; write metrics (success/error counts) for observability."
+    },
+    {
+      "id": "practice-recommendation-1",
+      "name": "Practice Recommendation",
+      "description": "Practice Recommendation across joined datasets; branch on thresholds using decision gates; write metrics (success/error counts) for observability."
+    },
+    {
+      "id": "progress-review-2",
+      "name": "Progress Review",
+      "description": "Progress Review across joined datasets; branch on thresholds using decision gates; write metrics (success/error counts) for observability."
+    },
+    {
+      "id": "finalize",
+      "name": "Parent/Student Notification",
+      "description": "Assemble final payload with status, artifacts, KPIs and audit trail; store to Identity/SSO; return response JSON for the client."
+    }
+  ],
+  "nodes": [
+    {
+      "id": "intake",
+      "type": "agentbridge",
+      "data": {
+        "label": "Assessment Intake",
+        "description": "Collect, validate and normalize content metadata from SIS; attach a runId and timestamp for traceability.",
+        "nodeType": "input",
+        "category": "ai-models",
+        "executionMode": "autonomous"
+      },
+      "position": {
+        "x": 60,
+        "y": 120
+      }
+    },
+    {
+      "id": "retrieve-0",
+      "type": "agentbridge",
+      "data": {
+        "label": "Retrieve",
+        "description": "Execute retrieve phase for the RAG pattern: persist interim state, enforce guardrails, and emit structured JSON results.",
+        "nodeType": "llm",
+        "category": "ai-models",
+        "executionMode": "autonomous"
+      },
+      "position": {
+        "x": 310,
+        "y": 120
+      }
+    },
+    {
+      "id": "ground-1",
+      "type": "agentbridge",
+      "data": {
+        "label": "Ground",
+        "description": "Execute ground phase for the RAG pattern: persist interim state, enforce guardrails, and emit structured JSON results.",
+        "nodeType": "llm",
+        "category": "ai-models",
+        "executionMode": "autonomous"
+      },
+      "position": {
+        "x": 560,
+        "y": 120
+      }
+    },
+    {
+      "id": "readiness-check-0",
+      "type": "agentbridge",
+      "data": {
+        "label": "Readiness Check",
+        "description": "Readiness Check across joined datasets; branch on thresholds using decision gates; write metrics (success/error counts) for observability.",
+        "nodeType": "llm",
+        "category": "ai-models",
+        "executionMode": "autonomous"
+      },
+      "position": {
+        "x": 810,
+        "y": 120
+      }
+    },
+    {
+      "id": "practice-recommendation-1",
+      "type": "agentbridge",
+      "data": {
+        "label": "Practice Recommendation",
+        "description": "Practice Recommendation across joined datasets; branch on thresholds using decision gates; write metrics (success/error counts) for observability.",
+        "nodeType": "llm",
+        "category": "ai-models",
+        "executionMode": "autonomous"
+      },
+      "position": {
+        "x": 1060,
+        "y": 120
+      }
+    },
+    {
+      "id": "progress-review-2",
+      "type": "agentbridge",
+      "data": {
+        "label": "Progress Review",
+        "description": "Progress Review across joined datasets; branch on thresholds using decision gates; write metrics (success/error counts) for observability.",
+        "nodeType": "llm",
+        "category": "ai-models",
+        "executionMode": "autonomous"
+      },
+      "position": {
+        "x": 1310,
+        "y": 120
+      }
+    },
+    {
+      "id": "finalize",
+      "type": "agentbridge",
+      "data": {
+        "label": "Parent/Student Notification",
+        "description": "Assemble final payload with status, artifacts, KPIs and audit trail; store to Identity/SSO; return response JSON for the client.",
+        "nodeType": "output",
+        "category": "ai-models",
+        "executionMode": "autonomous"
+      },
+      "position": {
+        "x": 1560,
+        "y": 120
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "edge-0",
+      "source": "intake",
+      "target": "retrieve-0",
+      "type": "agentbridge",
+      "data": {
+        "label": "flow"
+      }
+    },
+    {
+      "id": "edge-1",
+      "source": "retrieve-0",
+      "target": "ground-1",
+      "type": "agentbridge",
+      "data": {
+        "label": "flow"
+      }
+    },
+    {
+      "id": "edge-2",
+      "source": "ground-1",
+      "target": "readiness-check-0",
+      "type": "agentbridge",
+      "data": {
+        "label": "flow"
+      }
+    },
+    {
+      "id": "edge-3",
+      "source": "readiness-check-0",
+      "target": "practice-recommendation-1",
+      "type": "agentbridge",
+      "data": {
+        "label": "flow"
+      }
+    },
+    {
+      "id": "edge-4",
+      "source": "practice-recommendation-1",
+      "target": "progress-review-2",
+      "type": "agentbridge",
+      "data": {
+        "label": "flow"
+      }
+    },
+    {
+      "id": "edge-5",
+      "source": "progress-review-2",
+      "target": "finalize",
+      "type": "agentbridge",
+      "data": {
+        "label": "flow"
+      }
+    }
+  ],
+  "preview": "Assessment Intake → Retrieve → Ground → Readiness Check → Practice Recommendation → Progress Review → Parent/Student Notification",
+  "featured": false,
+  "createdAt": "2025-12-28T22:02:46.132Z",
+  "author": "AgentBridge Team",
+  "deployments": 2425,
+  "lastDeployed": "2026-01-15T04:45:49.656Z",
+  "configuration": {
+    "provider": "azure",
+    "region": "us-west-2",
+    "compute": "cpu-optimized"
+  },
+  "healthStatus": "healthy",
+  "deploymentCount": 1199,
+  "githubRepo": "https://github.com/agentbridge/education-outcome-tracker-for-transcript",
+  "maintainer": "AgentBridge Team",
+  "agenticLayers": {
+    "reasoning": {
+      "modelType": "gpt-4o",
+      "reasoningPattern": "ReAct",
+      "contextWindow": 128000,
+      "memorySystem": "hybrid",
+      "decisionFramework": "Multi-Criteria Decision Analysis"
+    },
+    "orchestration": {
+      "workflowEngine": "n8n",
+      "coordinationPattern": "centralized",
+      "failoverStrategy": "retry",
+      "loadBalancing": "intelligent"
+    },
+    "protocol": {
+      "communicationProtocol": "MCP",
+      "messageFormat": "JSON",
+      "authenticationMethod": "OAuth2",
+      "encryptionStandard": "AES-256"
+    },
+    "governance": {
+      "policyEngine": "OPA",
+      "complianceStandards": [
+        "SOC2",
+        "GDPR"
+      ],
+      "auditTrail": true,
+      "riskAssessment": "medium",
+      "dataClassification": "internal"
+    },
+    "observability": {
+      "metricsCollection": "Prometheus",
+      "loggingFramework": "ELK",
+      "tracingSystem": "Jaeger",
+      "alertingRules": [],
+      "dashboardConfig": {
+        "layout": "grid",
+        "widgets": [
+          "metrics",
+          "logs",
+          "traces"
+        ],
+        "refreshInterval": 30
+      }
+    },
+    "intelligence": {
+      "learningCapability": "online",
+      "knowledgeBase": "vector-db",
+      "adaptationMechanism": "ml-based",
+      "performanceOptimization": "ai-driven"
+    }
+  },
+  "businessFunction": "data-preparation-node",
+  "autonomyLevel": "semi-autonomous",
+  "cognitiveCapabilities": [
+    {
+      "name": "Pattern Recognition",
+      "description": "Identifies patterns in business processes",
+      "confidenceLevel": 0.85,
+      "lastUpdated": "2026-02-06T22:02:46.154Z"
+    }
+  ],
+  "roiMetrics": {
+    "costSavings": 87752,
+    "timeReduction": 71,
+    "accuracyImprovement": 38,
+    "throughputIncrease": 36,
+    "errorReduction": 47
+  },
+  "complianceFramework": {
+    "standards": [
+      "SOC2",
+      "GDPR",
+      "ISO27001"
+    ],
+    "certifications": [
+      "SOC2 Type II"
+    ],
+    "auditFrequency": "monthly",
+    "lastAudit": "2026-01-08T22:27:33.907Z"
+  },
+  "scalingPolicy": {
+    "minInstances": 1,
+    "maxInstances": 10,
+    "scaleUpThreshold": 80,
+    "scaleDownThreshold": 20,
+    "cooldownPeriod": 300
+  }
+}
